@@ -87,15 +87,6 @@ public:
 		m_size--;
 		delete[] m_arr;
 		m_arr = temp;
-		if (m_capacity >= 2*m_size){
-			T* temp = new T[2 * m_capacity];
-            for (int i = 0; i < m_capacity; i++) {
-                temp[i] = m_arr[i];
-            }
-            delete[] m_arr;
-            m_capacity /= 2;
-            m_arr = temp;
-        }
 	}
 
 	void erase(int index){
@@ -110,15 +101,6 @@ public:
 		m_size--;
 		delete[] m_arr;
 		m_arr = temp;
-		if (m_capacity >= 2*m_size){
-			T* temp = new T[2 * m_capacity];
-            for (int i = 0; i < m_capacity; i++) {
-                temp[i] = m_arr[i];
-            }
-            delete[] m_arr;
-            m_capacity /= 2;
-            m_arr = temp;
-        }
 	}
 
 	void print(){
@@ -126,6 +108,4 @@ public:
 			std::cout << m_arr[i] << "\t";
 		}
 	}
-
-
 };
