@@ -38,8 +38,8 @@ public:
 
 	T& at(int i){
 		if (i < 0 || i > m_size){
-        	return NULL;
-    	}
+			throw std::out_of_range("Index out of range");
+		}
 		return m_arr[i];
 	}
 
