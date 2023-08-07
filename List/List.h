@@ -85,16 +85,25 @@ class List{
                 temp = temp->next;
             }
 		}
-		T& front(){
+		Node<T>* front(){
 			if (head == nullptr){
 				throw std::runtime_error("List is empty");
 			}
-			return head->data;
+			return head;
 		}
-		T& back(){
+		Node<T>* back(){
 			if (head == nullptr){
 				throw std::runtime_error("List is empty");
 			}
-			return tail->data;
+			return tail;
+		}
+		int size(){
+			Node<T>* temp = head;
+			int count = 0;
+			while(temp != nullptr){
+				count++;
+				temp = temp->next;
+			}
+			return count;
 		}
 };
