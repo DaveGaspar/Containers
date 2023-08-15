@@ -3,6 +3,7 @@
 int main()
 {
 	Vector<int> vec;
+	/*
 	vec.push_back(1);
 	vec.print();
 	std::cout << "\n" << vec.capacity() << " " << vec.size() << std::endl;
@@ -44,6 +45,24 @@ int main()
 	vec.erase(3);
 	vec.print();
 	std::cout << "\n" << vec.capacity() << " " << vec.size() << std::endl;
+	*/
+
+	while(vec.size() != 10){
+		vec.push_back(rand()%90+10);
+	}
+
+	vec.print();
+	std::cout << std::endl;
+
+	for (Vector<int>::Iterator it = vec.begin(); it != vec.end(); it++){
+		std::cout << *it << "\t";
+	}
+	std::cout << std::endl;
+
+	for (auto it : vec){
+		std::cout << it << "\t";
+	}
+	std::cout << std::endl;
 
 	return 0;
 }

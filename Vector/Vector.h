@@ -2,9 +2,59 @@
 
 #include <iostream>
 
+template <typename Vector>
+class VectorIterator{
+
+public:
+	using ValueType = typename Vector::ValueType;
+	using PointerType = ValueType*;
+	using ReferenceType = ValueType&;
+private:
+	PointerType m_ptr;
+public:
+	VectorIterator(PointerType ptr): m_ptr(ptr){
+	}
+	VectorIterator& operator++(){
+		m_ptr++;
+		return *this;
+	}
+	VectorIterator operator++(int){
+		VectorIterator iterator = *this;
+		++(*this);
+		return iterator;
+	}
+	VectorIterator& operator--(){
+		m_ptr--;
+		return *this;
+	}
+	VectorIterator operator--(int){
+		VectorIterator iterator = *this;
+		--(*this);
+		return iterator;
+	}
+	ReferenceType operator[](int i){
+		return m_ptr[i];
+	}
+	PointerType operator->(){
+		return m_ptr;
+	}
+	ReferenceType operator*(){
+		return *m_ptr;
+	}
+	bool operator==(const VectorIterator& obj){
+		return m_ptr == obj.m_ptr;
+	}
+	bool operator!=(const VectorIterator& obj){
+		return !(*this == obj);
+	}
+};
+
 template <typename T>
 class Vector{
 
+public:
+	using ValueType = T;
+	using Iterator = VectorIterator<Vector<T>>;
 private:
 	T* m_arr = nullptr;
 	int m_size;
@@ -107,5 +157,13 @@ public:
 		for (int i = 0; i < m_size; i++){
 			std::cout << m_arr[i] << "\t";
 		}
+	}
+
+	Iterator begin(){
+		return Iterator(m_arr);
+	}
+
+	Iterator end(){
+		return Iterator(m_arr + m_size);
 	}
 };
