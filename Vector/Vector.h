@@ -3,6 +3,49 @@
 #include <iostream>
 
 template <typename Vector>
+class InputIterator{
+
+public:
+	using ValueType = typename Vector::ValueType;
+	using PointerType = ValueType*;
+	using ReferenceType = ValueType&;
+private:
+	PointerType m_ptr;
+public:
+	InputIterator(PointerType ptr): m_ptr(ptr){
+	}
+	InputIterator(const InputIterator& obj): m_ptr(obj.m_ptr){
+	}
+	InputIterator& operator=(const InputIterator& obj){
+		if (this != &obj){
+			this->m_ptr = obj.m_ptr;
+		}
+		return *this;
+	}
+	InputIterator& operator++(){
+		m_ptr++;
+		return *this;
+	}
+	InputIterator operator++(int){
+		InputIterator iterator = *this;
+		++(*this);
+		return iterator;
+	}
+	PointerType operator->(){
+		return m_ptr;
+	}
+	ReferenceType operator*(){
+		return *m_ptr;
+	}
+	bool operator==(const InputIterator& obj){
+		return m_ptr == obj.m_ptr;
+	}
+	bool operator!=(const InputIterator& obj){
+		return !(*this == obj);
+	}
+};
+
+template <typename Vector>
 class VectorIterator{
 
 public:
@@ -54,7 +97,7 @@ class Vector{
 
 public:
 	using ValueType = T;
-	using Iterator = VectorIterator<Vector<T>>;
+	using Iterator = InputIterator<Vector<T>>;
 private:
 	T* m_arr = nullptr;
 	int m_size;
