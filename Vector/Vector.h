@@ -2,46 +2,61 @@
 
 #include <iostream>
 
-template <typename Vector>
-class InputIterator{
+// template <typename Vector>
+// class InputIterator{
 
-public:
-	using ValueType = typename Vector::ValueType;
-	using PointerType = ValueType*;
-	using ReferenceType = ValueType&;
+// public:
+// 	using ValueType = typename Vector::ValueType;
+// 	using PointerType = ValueType*;
+// 	using ReferenceType = ValueType&;
+// private:
+// 	PointerType m_ptr;
+// public:
+// 	InputIterator(PointerType ptr): m_ptr(ptr){
+// 	}
+// 	InputIterator(const InputIterator& obj): m_ptr(obj.m_ptr){
+// 	}
+// 	InputIterator& operator=(const InputIterator& obj){
+// 		if (this != &obj){
+// 			this->m_ptr = obj.m_ptr;
+// 		}
+// 		return *this;
+// 	}
+// 	InputIterator& operator++(){
+// 		m_ptr++;
+// 		return *this;
+// 	}
+// 	InputIterator operator++(int){
+// 		InputIterator iterator = *this;
+// 		++(*this);
+// 		return iterator;
+// 	}
+// 	PointerType operator->(){
+// 		return m_ptr;
+// 	}
+// 	ReferenceType operator*(){
+// 		return *m_ptr;
+// 	}
+// 	bool operator==(const InputIterator& obj){
+// 		return m_ptr == obj.m_ptr;
+// 	}
+// 	bool operator!=(const InputIterator& obj){
+// 		return !(*this == obj);
+// 	}
+// };
+
+class MyException:public std::exception{
 private:
-	PointerType m_ptr;
+	const char * m_c;
 public:
-	InputIterator(PointerType ptr): m_ptr(ptr){
+	MyException() = delete;
+	MyException(const char * c) : m_c(c){
+
 	}
-	InputIterator(const InputIterator& obj): m_ptr(obj.m_ptr){
-	}
-	InputIterator& operator=(const InputIterator& obj){
-		if (this != &obj){
-			this->m_ptr = obj.m_ptr;
-		}
-		return *this;
-	}
-	InputIterator& operator++(){
-		m_ptr++;
-		return *this;
-	}
-	InputIterator operator++(int){
-		InputIterator iterator = *this;
-		++(*this);
-		return iterator;
-	}
-	PointerType operator->(){
-		return m_ptr;
-	}
-	ReferenceType operator*(){
-		return *m_ptr;
-	}
-	bool operator==(const InputIterator& obj){
-		return m_ptr == obj.m_ptr;
-	}
-	bool operator!=(const InputIterator& obj){
-		return !(*this == obj);
+	~MyException() override = default;
+public:
+	const char * what() const noexcept override{
+		return m_c;
 	}
 };
 
@@ -97,7 +112,7 @@ class Vector{
 
 public:
 	using ValueType = T;
-	using Iterator = InputIterator<Vector<T>>;
+	using Iterator = VectorIterator<Vector<T>>;
 private:
 	T* m_arr = nullptr;
 	int m_size;
@@ -130,10 +145,16 @@ public:
 	}
 
 	T& at(int i){
-		if (i < 0 || i > m_size){
-			throw std::out_of_range("Index out of range");
+		try{
+			if (i < 0 || i > m_size){
+				throw MyException("Index is out of range");
+			}
+			return m_arr[i];
 		}
-		return m_arr[i];
+		catch(const std::exception& ex){
+			std::cout << ex.what() << std::endl;
+			exit(1);
+		}
 	}
 
 	void push_back(const T& value){

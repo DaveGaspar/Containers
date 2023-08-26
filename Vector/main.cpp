@@ -54,15 +54,17 @@ int main()
 	vec.print();
 	std::cout << std::endl;
 
-	for (Vector<int>::Iterator it = vec.begin(); it != vec.end(); it++){
-		std::cout << *it << "\t";
-	}
-	std::cout << std::endl;
+	// for (Vector<int>::Iterator it = vec.begin(); it != vec.end(); it++){
+	// 	std::cout << *it << "\t";
+	// }
+	// std::cout << std::endl;
 
-	for (auto it : vec){
-		std::cout << it << "\t";
-	}
-	std::cout << std::endl;
+	// for (auto it : vec){
+	// 	std::cout << it << "\t";
+	// }
+	// std::cout << std::endl;
+
+	std::cout << vec.at(11) << std::endl;
 
 	return 0;
 }
