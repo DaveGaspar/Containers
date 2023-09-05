@@ -64,7 +64,12 @@ int main()
 	// }
 	// std::cout << std::endl;
 
-	std::cout << vec.at(11) << std::endl;
+	try{
+		std::cout << vec.at(11) << std::endl;
+	}
+	catch(const std::exception& ex){
+		std::cout << ex.what() << std::endl;
+	}
 
 	return 0;
 }

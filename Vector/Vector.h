@@ -145,16 +145,10 @@ public:
 	}
 
 	T& at(int i){
-		try{
-			if (i < 0 || i > m_size){
-				throw MyException("Index is out of range");
-			}
-			return m_arr[i];
+		if (i < 0 || i > m_size){
+			throw MyException("Index is out of range");
 		}
-		catch(const std::exception& ex){
-			std::cout << ex.what() << std::endl;
-			exit(1);
-		}
+		return m_arr[i];
 	}
 
 	void push_back(const T& value){
